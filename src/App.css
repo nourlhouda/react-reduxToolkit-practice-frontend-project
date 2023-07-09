@@ -20,6 +20,13 @@
   margin-bottom: 1em;
 }
 
+.Auth-form span {
+  display: flex;
+  justify-content: space-around;
+  margin-right: 10px;
+  margin-left: 240px;
+}
+
 .Auth-form-content {
   padding-left: 12%;
   padding-right: 12%;
@@ -178,3 +185,12 @@ img {
   object-fit: cover;
 }
 
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 25%;
+  margin-right: 25%;
+  width: 30vw;
+  height: 11vh;
+}

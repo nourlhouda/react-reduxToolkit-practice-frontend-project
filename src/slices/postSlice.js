@@ -14,6 +14,55 @@ export const getAllPosts = createAsyncThunk(
   }
 );
 
+//add a new post
+export const addPost = createAsyncThunk(
+  "user/addPost",
+  async (info, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/api/posts/create", info, {
+        headers: { token: localStorage.getItem("token") },
+      });
+      return response.data; // Return the created post data
+    } catch (errors) {
+      rejectWithValue(errors.response.data);
+    }
+  }
+);
+
+//delete post by Id
+export const deletePost = createAsyncThunk(
+  "user/deletePost",
+  async (postId, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(`/api/posts/delete/${postId}`, {
+        headers: { token: localStorage.getItem("token") },
+      });
+      return response.data; // Return the created post data
+    } catch (errors) {
+      rejectWithValue(errors.response.data);
+    }
+  }
+);
+
+//update post by Id
+export const updatePost = createAsyncThunk(
+  "user/updatePost",
+  async (postInfo, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `/api/posts/update/${postInfo.id}`,
+        postInfo,
+        {
+          headers: { token: localStorage.getItem("token") },
+        }
+      );
+      return response.data; // Return the created post data
+    } catch (errors) {
+      rejectWithValue(errors.response.data);
+    }
+  }
+);
+
 const postSlice = createSlice({
   name: "post",
   initialState: {
@@ -33,6 +82,21 @@ const postSlice = createSlice({
     [getAllPosts.rejected]: (state, action) => {
       state.loading = false;
       state.errors = action.payload;
+    },
+    [addPost.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.postList.push(action.payload);
+      state.errors = null;
+    },
+    [deletePost.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.postList.push(action.payload);
+      state.errors = null;
+    },
+    [updatePost.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.postList.push(action.payload);
+      state.errors = null;
     },
   },
 });
