@@ -15,7 +15,7 @@ function PostModal({ check, title, image, desc, id }) {
   const addPost = (data) => {
     console.log(data);
     if (check) dispatch(updatePost({ ...data, id }));
-    dispatch(addPostAction(data));
+    else dispatch(addPostAction(data));
     handleClose();
   };
   return (
